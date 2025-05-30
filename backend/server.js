@@ -1,10 +1,10 @@
 import express from 'express';
 
+import notesRoutes from './routes/notesRoutes.js';
+
 const app = express();
 
-app.get('/api/notes', (req, res) => {
-  res.json('You got five notes.');
-});
+app.use('/api/notes', notesRoutes);
 
 app.listen(5000, () => {
   console.log('Server is running on port 5000');
