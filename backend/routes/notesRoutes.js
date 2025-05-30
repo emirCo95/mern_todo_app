@@ -14,8 +14,6 @@ router.post('/', createNote);
 
 router.put('/:id', updateNote);
 
-router.delete('/:id', (req, res) => {
-  res.status(200).json({ message: 'Note deleted successfully!' });
-});
+router.delete('/:id');
 
 export default router;
