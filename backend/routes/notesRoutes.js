@@ -4,9 +4,8 @@ import { getAllNotes } from '../controllers/notesController.js';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to the Notes API!' });
-});
+router.get('/', getAllNotes);
+
 router.post('/', (req, res) => {
   res.status(201).json({ message: 'Note created successfully!' });
 });
