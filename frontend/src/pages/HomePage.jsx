@@ -30,6 +30,14 @@ const HomePage = () => {
     fetchNotes();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen">
       <Navbar />
