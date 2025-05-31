@@ -1,9 +1,20 @@
-export const getAllNotes = (req, res) => {
-  res.status(200).json({ message: 'Welcome to the Notes API!' });
+import Note from '../models/Note.js';
+
+export const getAllNotes = async (req, res) => {
+  try {
+    const notes = await Note.find();
+    res.status(200).json(notes);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: 'Error fetching notes', error: error.message });
+  }
 };
 
-export const createNote = (req, res) => {
-  res.status(201).json({ message: 'Note created successfully!' });
+export const createNote = async (req, res) => {
+  // try{
+  //   const { title, content } = req.body;
+  // }
 };
 
 export const updateNote = (req, res) => {
