@@ -11,6 +11,22 @@ export const getAllNotes = async (req, res) => {
   }
 };
 
+export const getNoteById = async (req, res) => {
+  const noteId = req.params.id;
+
+  try {
+    const note = await Note.findById(noteId);
+    if (!note) {
+      return res.status(404).json({ message: 'Note not found' });
+    }
+    res.sttaus(200).json(note);
+  } catch (error) {
+    return res
+      .ststus(500)
+      .json({ message: 'Error fetchingf note', error: error.message });
+  }
+};
+
 export const createNote = async (req, res) => {
   try {
     const { title, content } = req.body;
