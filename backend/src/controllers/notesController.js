@@ -12,9 +12,19 @@ export const getAllNotes = async (req, res) => {
 };
 
 export const createNote = async (req, res) => {
-  // try{
-  //   const { title, content } = req.body;
-  // }
+  try {
+    const { title, content } = req.body;
+    const newNote = new Note({ title, content });
+
+    await newNote.save();
+    res
+      .status(201)
+      .json({ message: 'Note created successfully!', note: newNote });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: 'Error creating note', error: error.message });
+  }
 };
 
 export const updateNote = (req, res) => {
