@@ -2,7 +2,7 @@ import Note from '../models/Note.js';
 
 export const getAllNotes = async (req, res) => {
   try {
-    const notes = await Note.find();
+    const notes = await Note.find().sort({ createdAt: -1 });
     res.status(200).json(notes);
   } catch (error) {
     return res
@@ -19,7 +19,7 @@ export const getNoteById = async (req, res) => {
     if (!note) {
       return res.status(404).json({ message: 'Note not found' });
     }
-    res.sttaus(200).json(note);
+    res.status(200).json(note);
   } catch (error) {
     return res
       .ststus(500)
