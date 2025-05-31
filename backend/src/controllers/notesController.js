@@ -27,8 +27,29 @@ export const createNote = async (req, res) => {
   }
 };
 
-export const updateNote = (req, res) => {
-  res.status(200).json({ message: 'Note updated successfully!' });
+export const updateNote = async (req, res) => {
+  try {
+    const { title, content } = req.body;
+    const noteId = req.params.id;
+    const updatedNote = await Note.findByIdAndUpdate(
+      noteId,
+      { title, content },
+      { new: true }
+    );
+
+    if (!updateNote) {
+      res.status(404).json({ message: 'Note not found' });
+    }
+
+    res.status(200).json({
+      message: 'Note updated successfully!',
+      note: updatedNote,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: 'Error updating note', error: error.message });
+  }
 };
 
 export const deleteNote = (req, res) => {
