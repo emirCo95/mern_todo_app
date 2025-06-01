@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import axiosInstance from '../lib/axios';
 import { ArrowLeftIcon, Trash2Icon } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const NoteDetailPage = () => {
   const [note, setNote] = useState(null);
@@ -26,8 +27,34 @@ const NoteDetailPage = () => {
     fetchNote();
   }, [id]);
 
-  const handleDelete = async () => {};
-  const handleSave = async () => {};
+  const handleDelete = async () => {
+    if (saving) return; // Prevent multiple clicks
+
+    setSaving(true);
+    try {
+      await axiosInstance.delete(`/notes/${id}`);
+      toast.success('Note deleted successfully!');
+      navigate('/');
+    } catch (error) {
+      console.error('Error deleting note:', error);
+    } finally {
+      setSaving(false);
+    }
+  };
+  const handleSave = async () => {
+    if (saving) return; // Prevent multiple clicks
+
+    setSaving(true);
+    try {
+      await axiosInstance.put(`/notes/${id}`, note);
+      toast.success('Note saved successfully!');
+      navigate('/');
+    } catch (error) {
+      console.error('Error saving note:', error);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -41,7 +68,7 @@ const NoteDetailPage = () => {
             <ArrowLeftIcon className="h-5 w-5" />
             Back to Notes
           </Link>
-          <button className="btn btn-error btn-outline">
+          <button onClick={handleDelete} className="btn btn-error btn-outline">
             <Trash2Icon className="h-5 w-5" />
             Delete Note
           </button>
