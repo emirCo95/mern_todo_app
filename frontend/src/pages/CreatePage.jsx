@@ -13,6 +13,12 @@ const CreatePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!title.trim() || !content.trim()) {
+      toast.error('Title and content cannot be empty!');
+      return;
+    }
+
     setLoading(true);
     try {
       await axios.post('http://localhost:5000/api/notes', {
@@ -58,6 +64,7 @@ const CreatePage = () => {
                     <span className="label-text">Content</span>
                   </label> */}
                   <textarea
+                    rows={10}
                     placeholder="Note Content"
                     className="input input-bordered"
                     value={content}
